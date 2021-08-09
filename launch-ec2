@@ -1,7 +1,8 @@
-https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
-
 #!/bin/bash
+# https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
+
 apt update
+apt install -y mc
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
@@ -13,6 +14,25 @@ apt-get update
 apt-get install -y apt-transport-https
 apt-get update
 apt-get install -y aspnetcore-runtime-5.0
+
 apt install -y nginx
 service nginx start
-mkdir /var/www/
+
+mkdir /var/www/webApi
+
+echo '[Unit]
+Description=Web API App running
+
+[Service]
+WorkingDirectory=/var/www/webApi
+ExecStart=/usr/bin/dotnet /var/www/webApi
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=dotnet-example
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target' > /var/www/webApi
