@@ -1,5 +1,4 @@
 #!/bin/bash
-# https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
 
 apt update
 apt install -y mc
@@ -18,8 +17,7 @@ apt-get install -y aspnetcore-runtime-5.0
 apt install -y nginx
 service nginx start
 
-mkdir /var/www/
-mkdir /var/www/webApi
+mkdir -p /var/www/webApi
 
 echo '[Unit]
 Description=Web API App running
@@ -36,4 +34,4 @@ Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 
 [Install]
-WantedBy=multi-user.target' > /var/www/webApi
+WantedBy=multi-user.target' > /etc/systemd/system/dotnetapp.service
