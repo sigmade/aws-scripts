@@ -18,6 +18,7 @@ apt-get install -y aspnetcore-runtime-5.0
 apt install -y nginx
 service nginx start
 
+mkdir /var/www/
 mkdir /var/www/webApi
 
 echo '[Unit]
